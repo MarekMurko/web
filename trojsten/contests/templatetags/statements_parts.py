@@ -9,7 +9,7 @@ from trojsten.contests.models import Category, Task
 from trojsten.results.manager import get_results_tags_for_rounds
 from trojsten.submit.models import Submit
 
-from ..helpers import get_points_from_submits, get_rounds_by_year, slice_if_needed
+from ..helpers import get_points_from_submits, get_rounds_by_year, slice_tag_list
 
 register = template.Library()
 
@@ -43,7 +43,7 @@ def show_task_list(context, round):
 @register.inclusion_tag('trojsten/contests/parts/buttons.html', takes_context=True)
 def show_buttons(context, round):
     (results_tags,) = get_results_tags_for_rounds((round,))
-    results_tags = slice_if_needed(2, 1, list(results_tags))
+    results_tags = slice_tag_list(list(results_tags))
 
     context.update({
         'round': round,
